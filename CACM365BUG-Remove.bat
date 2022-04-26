@@ -1,5 +1,5 @@
 echo =======================
-echo echo A batch file to delete "CAC-M365-Repeat-Install-Bug" folder, Remove the associated scheduled task, and call for a manual update of Mirosoft Office 365.
+echo A batch file to delete "CAC-M365-Repeat-Install-Bug" folder, Remove the associated scheduled task, and call for a manual update of Mirosoft Office 365.
 echo =======================
 timeout 5
 
