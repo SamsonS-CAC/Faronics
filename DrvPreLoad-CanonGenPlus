@@ -1,0 +1,5 @@
+pnputil.exe /a "\\CAC-SHARE01\Tech\Support_Services\Drivers-Printer\Canon\Generic_Plus_PCL6_v2.72_Set-up_x64\Driver\CNP60MA64.INF"
+Start-Sleep -Seconds 5
+
+Add-PrinterDriver -Name "Canon Generic Plus PCL6" -InfPath "C:\WINDOWS\System32\DriverStore\FileRepository\cnp60ma64.inf_amd64_496303918b39c5ae\CNP60MA64.INF"
+Start-Sleep -Seconds 5
