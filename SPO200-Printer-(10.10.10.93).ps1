@@ -1,6 +1,6 @@
 $MYPRINTERDRV = "HP Universal Printing PCL 6"
 $MYPRINTER = "HP PRINTER SPC-O200 Learning Center"
-$MYPRINTERIP = "10.10.10.72"
+$MYPRINTERIP = "10.10.10.93"
 
 Get-Printer | Where-Object { $_.Name -notmatch "PDF" } | Remove-Printer
 Start-Sleep -Seconds 5
