@@ -1,6 +1,5 @@
 Set-LocalUser localadmin -PasswordNeverExpires $true
 Set-LocalUser administrator -PasswordNeverExpires $true
-Get-LocalUser
 New-LocalUser "localadm" -FullName "localadm" -Description "localadm"
 Add-LocalGroupMember -Group "Administrators" -Member "localadm"
 Get-LocalUser
