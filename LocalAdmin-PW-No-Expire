@@ -1,10 +1,17 @@
-Set-LocalUser localadmin -PasswordNeverExpires $true | Enable-LocalUser
-Set-LocalUser administrator -PasswordNeverExpires $true | Enable-LocalUser
-
-$SecurePassword = ConvertTo-SecureString "P@ssword2023!" -AsPlainText -Force
-New-LocalUser "localadm" -Password $SecurePassword -FullName "localadm" -Description "localadm"
-Add-LocalGroupMember -Group "Administrators" -Member "localadm"
-Set-LocalUser localadm -PasswordNeverExpires $true | Enable-LocalUser
-
 Get-LocalUser
+
+$UserAccount = Get-LocalUser -Name "localadmin"
+$UserAccount | Set-LocalUser -PasswordNeverExpires $true
+$UserAccount | Enable-LocalUser
+
+$UserAccount = Get-LocalUser -Name "master"
+$UserAccount | Set-LocalUser -PasswordNeverExpires $true
+$UserAccount | Enable-LocalUser
+
+$UserAccount = Get-LocalUser -Name "technician"
+$UserAccount | Set-LocalUser -PasswordNeverExpires $true
+$UserAccount | Enable-LocalUser
+
+Get-LocalUser | FL
+
 
