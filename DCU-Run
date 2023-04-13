@@ -66,3 +66,4 @@ Else {
 $LogDate = (Get-Date).ToString("yyyy-MM-dd hh:mm:ss")
 $LogMessage = "Finished the Get-DCU_Updates script"
 ($LogDate + $Tab + $LogMessage) | Out-File -FilePath (Join-Path -Path $LogDirectory -ChildPath $LogFile) -Append
+
