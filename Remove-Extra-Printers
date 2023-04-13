@@ -1,0 +1,5 @@
+Get-Printer
+Get-Printer | Where-Object { $_.Name -notmatch "PDF" } | Remove-Printer
+gpupdate /force
+Get-Printer | FL
+
