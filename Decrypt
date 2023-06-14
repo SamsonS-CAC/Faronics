@@ -1,0 +1,2 @@
+Clear-BitLockerAutoUnlock 
+Get-BitLockerVolume | Disable-BitLocker
