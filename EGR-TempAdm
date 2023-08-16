@@ -1,0 +1,5 @@
+$password = "egr" | ConvertTo-SecureString
+-AsPlainText -Force
+Set-LocalUser -Name StudentLL -Password $password -Verbose
+Add-LocalGroupMember -Group "Administrators" -Member "StudentLL"
+
