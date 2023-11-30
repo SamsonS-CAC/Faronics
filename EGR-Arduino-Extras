@@ -1,15 +1,20 @@
 # URL and Destination
 $url = "https://github.com/SamsonS-CAC/Faronics/raw/Deploy/01.3_arduino-libraries+extras.zip"
+
 # Create temp destination for the zip and get zipfile name from source URL
 $zipFile = "c:\temp\zipfiles" + $(Split-Path -Path $Url -Leaf)
+
 # Extract path
-$extractPath = "c:\"
+$extractPath = "c:\temp\zipfiles"
+
 # Download file
 Invoke-WebRequest -Uri $url -OutFile $zipFile
 
 # Create instance of COM Object
 $objShell = New-Object -ComObject Shell.Application
+
 # Extract the Files
 $extractedFiles = $ObjShell.NameSpace($zipFile).Items()
+
 # Copy the extracted files to the destination folder
 $ObjShell.NameSpace($extractPath).CopyHere($extractedFiles)
