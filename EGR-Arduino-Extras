@@ -1,0 +1,1 @@
+robocopy "\\SPC-MDT01.centralaz.cac\1809DeploymentShare\Applications\_FDeploy+FDeepFreeze.Apps_\EGR\2023-08-10\01.3_arduino-libraries+extras" "C:\"
