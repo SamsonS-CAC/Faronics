@@ -2,7 +2,7 @@
 $url = "https://github.com/SamsonS-CAC/Faronics/raw/Deploy/01.3_arduino-libraries+extras.zip"
 
 # Destation file
-$dest = "c:\ITS\DL_Temp\01.3_arduino-libraries+extras.zip"
+$dest = "c:\ITS\01.3_arduino-libraries+extras.zip"
 
 # Download the file
 Invoke-WebRequest -Uri $url -OutFile $dest
