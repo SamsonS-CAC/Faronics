@@ -8,4 +8,4 @@ $dest = "c:\ITS\01.3_arduino-libraries+extras.zip"
 Invoke-WebRequest -Uri $url -OutFile $dest
 
 # Extract the Files
-Expand-Archive -LiteralPath <$dest> -DestinationPath <C:\>
+Expand-Archive -LiteralPath "$dest" -DestinationPath "c:\"
