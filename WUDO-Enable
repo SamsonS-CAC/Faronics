@@ -5,4 +5,4 @@ $Value = '3'
 Start-Sleep -Seconds 20
 
 Set-ItemProperty -Path $RegistryPath -Name $Name -Value $Value
-Start-Service -Force -Name "DoSvc"
+Start-Service -Name "DoSvc"
