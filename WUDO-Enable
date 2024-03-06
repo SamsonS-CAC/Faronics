@@ -1,8 +1,8 @@
 $RegistryPath =  'HKLM:\SYSTEM\CurrentControlSet\Services\DoSvc'
 $Name = 'Start'
-$Value = '3'
+$Value = '2'
 
-Start-Sleep -Seconds 20
+Start-Sleep -Seconds 30
 
 Set-ItemProperty -Path $RegistryPath -Name $Name -Value $Value
 Start-Service -Name "DoSvc"
