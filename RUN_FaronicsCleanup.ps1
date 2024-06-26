@@ -1,4 +1,4 @@
- PowerShell script to download and run an exe with arguments
+# PowerShell script to download and run an exe with arguments
 
 # Define the URL of the exe file
 $exe_url = "https://www.dropbox.com/scl/fi/jv2r9pazr3rryhc049hqh/FaronicsCleanupUtility.exe?rlkey=dpz5yle5y1hmh3i63lriffgwy&st=zew5ol98&dl=1"
