@@ -1,5 +1,5 @@
-$Name = "DRC INSIGHT Online Learning System - DRC INSIGHT Online Assessments","DRC INSIGHT Online Learning System","{43A091E9-1818-484D-A887-21C042DFB425}","DRC INSIGHT Online Learning System 15.0.0.123"
-$ProcName = "DRC"
+$Name = "DRC INSIGHT*"
+$ProcName = "DRCInsight"
 $Timestamp = Get-Date -Format "yyyy-MM-dd_THHmmss"
 $LogFile = "$env:TEMP\DRC-CU-Uninst_$Timestamp.log"
 $ProgramList = @( "HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*", "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*" )
