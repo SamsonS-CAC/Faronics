@@ -1,5 +1,5 @@
 ## 1 ## Disable Hibernation File ##
-powercfg /hibernation off
+powercfg /h off
 start-sleep 2
 write-Host "Disable Hibernation File = Success."
 
@@ -13,3 +13,5 @@ write-Host "Clear Temp Folders and Recycle Bin = Success."
 cleanmgr /sagerun:1 | out-Null  
 start-sleep 2
 write-Host "Run Disk Cleanup Tool = Success."
+
+
