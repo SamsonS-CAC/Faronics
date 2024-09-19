@@ -26,7 +26,7 @@
 .NOTES
   Version:        1.2
 .EXAMPLE
-  .\msoffice-removal-tool.ps1 -SupressReboot -Force
+  .\MSOffice-Remove.ps1 -SupressReboot -Force
 #>
 
 #---------------------------------------------------------[Initialisations]--------------------------------------------------------
