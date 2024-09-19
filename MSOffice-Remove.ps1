@@ -35,7 +35,7 @@ Param (
     [switch]$SuppressReboot = $True,
     [switch]$UseSetupRemoval = $False,
     [Switch]$Force = $True,
-    [switch]$RunAgain = $False,
+    [switch]$RunAgain = $True,
     [int]$SecondsToReboot = 60
 )
 #----------------------------------------------------------[Declarations]----------------------------------------------------------
