@@ -204,14 +204,14 @@ if (-not ($RunAgain)) {
             1 {
                 Write-Host "Resuming Stage 1: Uninstalling Office ..."
                 Invoke-OfficeUninstall 
-                Invoke-SetupOffice365 "$Office365Setup_URL/upgrade.xml"
+                Invoke-SetupOffice365 "$Office365Setup_URL/upgrade_staff.xml"
                 Remove-SaRA
                 Invoke-RebootInSeconds $SecondsToReboot
             }
 
             2 {
                 Write-Host "Resuming Stage 2: Installing Office 365 ..."
-                Invoke-SetupOffice365 "$Office365Setup_URL/upgrade.xml"
+                Invoke-SetupOffice365 "$Office365Setup_URL/upgrade_staff.xml"
                 Remove-SaRA
                 Invoke-RebootInSeconds $SecondsToReboot
             }
@@ -229,7 +229,7 @@ if (-not ($RunAgain)) {
             default {
                 Write-Host "Resuming Stage 1: Uninstalling Office ..."
                 Invoke-OfficeUninstall 
-                Invoke-SetupOffice365 "$Office365Setup_URL/upgrade.xml"
+                Invoke-SetupOffice365 "$Office365Setup_URL/upgrade_staff.xml"
                 Remove-SaRA
                 Invoke-RebootInSeconds $SecondsToReboot
             }
@@ -239,7 +239,7 @@ if (-not ($RunAgain)) {
         Invoke-Intro
         Stop-OfficeProcess
         Invoke-OfficeUninstall 
-        Invoke-SetupOffice365 "$Office365Setup_URL/upgrade.xml"
+        Invoke-SetupOffice365 "$Office365Setup_URL/upgrade_staff.xml"
         Invoke-RebootInSeconds $SecondsToReboot
     }
 }
@@ -247,7 +247,7 @@ else {
     Invoke-Intro
     Stop-OfficeProcess
     Invoke-OfficeUninstall 
-    Invoke-SetupOffice365 "$Office365Setup_URL/upgrade.xml"
+    Invoke-SetupOffice365 "$Office365Setup_URL/upgrade_staff.xml"
     Invoke-RebootInSeconds $SecondsToReboot
 }
 exit
