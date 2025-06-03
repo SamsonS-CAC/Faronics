@@ -1,5 +1,5 @@
-$Name = "PDQConnectAgent*"
-$ProcName = "PDQConnect*"
+$Name = "PDQ*"
+$ProcName = "PDQ*"
 $Timestamp = Get-Date -Format "yyyy-MM-dd_THHmmss"
 $LogFile = "$env:TEMP\DRC-CU-Uninst_$Timestamp.log"
 $ProgramList = @( "HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*", "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*" )
