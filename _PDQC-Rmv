@@ -5,3 +5,5 @@ mkdir C:\ITS\logs
 MsiExec.exe /X{0EC05CD8-8D17-472C-86DA-AF1EA387256F} /qn /norestart /log "C:\ITS\logs\remove-PDQConnectUpdater-output.log"
 
 MsiExec.exe /X{F03416B2-8C97-4CC4-8578-5F6A58234B84} /qn /norestart /log "C:\ITS\logs\remove-PDQConnectAgent-output.log"
+
+MsiExec.exe /X{F03416B2-8C97-4CC4-8578-5F6A58238B84} /qn /norestart /log "C:\ITS\logs\remove-PDQConnectAgent-output2.log"
