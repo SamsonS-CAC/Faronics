@@ -4,6 +4,20 @@ $Win11SetupPath = "\\centralaz.cac\shares\Tech\ITSA\23H2-W11-UPG\W11_ISO"  # Upd
 $LogPath = "C:\Windows\Temp\CAC_Win11Upgrade.log"
 $SetupExe = "$Win11SetupPath\setup.exe"
 
+# Get the OS version
+$osVersion = (Get-CimInstance -ClassName Win32_OperatingSystem).Version
+$buildNumber = int[2])
+
+# Windows 11 starts at build number 22000
+if ($buildNumber -ge 22000) {
+    # Windows 11 is installed — exit the script
+    Write-Output "Checking OS version... Windows 11 is already installed. Exiting script." | Out-File -Append $LogPath
+    exit 0
+}
+
+# If no Windows 11 installed, Continue with the rest of your script here
+Write-Output "Checking OS version... Windows 11 is not installed. Proceeding..." | Out-File -Append $LogPath
+
 # Ensure the Setup.exe exists before proceeding
 if (!(Test-Path $SetupExe)) {
     Write-Output "ERROR: setup.exe not found at $SetupExe" | Out-File -Append $LogPath
