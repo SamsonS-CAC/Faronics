@@ -5,8 +5,8 @@ $LogPath = "C:\Windows\Temp\CAC_Win11Upgrade.log"
 $SetupExe = "$Win11SetupPath\setup.exe"
 
 # Get the OS version
-$osVersion = (Get-CimInstance -ClassName Win32_OperatingSystem).Version
-$buildNumber = int[2])
+$osVersion = (Get-CimInstance Win32_OperatingSystem).Version
+$buildNumber = [int]($osVersion.Split('.')[2])
 
 # Windows 11 starts at build number 22000
 if ($buildNumber -ge 22000) {
