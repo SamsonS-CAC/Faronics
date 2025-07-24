@@ -70,8 +70,8 @@ if ($OSVersion -ge 22000) {
     #Disabled# Write-Output "Installation files deleted successfully." | Out-File -Append $LogPath
     
     # Reboot system
-    Write-Output "Rebooting the system in 30 seconds..." | Out-File -Append $LogPath
-    Start-Sleep -Seconds 30
+    Write-Output "Rebooting the system in 600 seconds..." | Out-File -Append $LogPath
+    Start-Sleep -Seconds 600
     Restart-Computer -Force
 } else {
     Write-Output "ERROR: Windows 11 upgrade failed. Please check logs." | Out-File -Append $LogPath
