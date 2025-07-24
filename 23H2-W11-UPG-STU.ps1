@@ -65,9 +65,9 @@ $OSVersion = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersi
 if ($OSVersion -ge 22000) {
     Write-Output "Windows 11 upgrade was successful. Cleaning up installation files..." | Out-File -Append $LogPath
     
-    # Remove installation files
-    Remove-Item -Path $Win11SetupPath -Recurse -Force -ErrorAction SilentlyContinue
-    Write-Output "Installation files deleted successfully." | Out-File -Append $LogPath
+    # Remove installation files (Disabled because source is network share)
+    #Disabled# Remove-Item -Path $Win11SetupPath -Recurse -Force -ErrorAction SilentlyContinue
+    #Disabled# Write-Output "Installation files deleted successfully." | Out-File -Append $LogPath
     
     # Reboot system
     Write-Output "Rebooting the system in 30 seconds..." | Out-File -Append $LogPath
