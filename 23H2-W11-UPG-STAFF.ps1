@@ -3,8 +3,13 @@ $Win11SetupPath = "\\centralaz.cac\shares\Tech\ITSA\23H2-W11-UPG\W11_ISO"  # Upd
 #This above share is the only edit you will need to make to this script. Below defines where the setupExe is.
 $SetupExe = "$Win11SetupPath\setup.exe"
 
-#Create Logs Folder and then define the Log File
-New-Item -Path "C:\ITS\Logs" -Type Directory
+#Check for Logs Folder and create it if it doesn't exist
+$LogsFolder = "C:\ITS\Logs"
+
+if (-not (Test-Path $LogsFolder)) {
+    New-Item -ItemType Directory -Path $LogsFolder > $null
+}
+#Define Log File path
 $LogPath = "C:\ITS\Logs\CAC_Win11Upgrade.log"
 
 # Get the OS version
