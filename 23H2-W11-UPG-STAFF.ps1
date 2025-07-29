@@ -1,8 +1,11 @@
 # Define Paths
 $Win11SetupPath = "\\centralaz.cac\shares\Tech\ITSA\23H2-W11-UPG\W11_ISO"  # Update this with the actual network path of the extracted win11 .iso files
-#This above share is the only edit you will need to make to this script
-$LogPath = "C:\ITS\CAC_Win11Upgrade.log"
+#This above share is the only edit you will need to make to this script. Below defines where the setupExe is.
 $SetupExe = "$Win11SetupPath\setup.exe"
+
+#Create Logs Folder and then define the Log File
+New-Item -Path "C:\ITS\Logs" -Type Directory
+$LogPath = "C:\ITS\Logs\CAC_Win11Upgrade.log"
 
 # Get the OS version
 $osVersion = (Get-CimInstance Win32_OperatingSystem).Version
