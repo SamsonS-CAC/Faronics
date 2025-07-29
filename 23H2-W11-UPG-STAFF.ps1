@@ -9,8 +9,17 @@ $LogsFolder = "C:\ITS\Logs"
 if (-not (Test-Path $LogsFolder)) {
     New-Item -ItemType Directory -Path $LogsFolder > $null
 }
+
 #Define Log File path
 $LogPath = "C:\ITS\Logs\CAC_Win11Upgrade.log"
+
+# ULFC = Upgrade Log File Copy. Now we will specify the variables used to copy and rename the resulting log file to a network share
+$ULFC_hostname = $env:COMPUTERNAME
+$ULFC_destPath = "\\centralaz.cac\shares\Tech\ITSA\23H2-W11-UPG\Logs"     # Remote file share path; create if it doesn't exist
+
+if (-not (Test-Path $ULFC_destPath)) {
+    New-Item -ItemType Directory -Path $ULFC_destPath > $null
+}
 
 # Get the OS version
 $osVersion = (Get-CimInstance Win32_OperatingSystem).Version
@@ -20,7 +29,14 @@ $buildNumber = [int]($osVersion.Split('.')[2])
 if ($buildNumber -ge 22000) {
     # Windows 11 is installed — exit the script
     Write-Output "Checking OS version... Windows 11 is already installed. Exiting script." | Out-File -Append $LogPath
-    exit 0
+
+    # ULFC - Create destination file name with hostname and timestamp. Copy it to network share.
+    $ULFC_timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
+    $ULFC_destFile = "Win11UpgLog_${ULFC_hostname}_$ULFC_timestamp.log"
+    $ULFC_destFullPath = Join-Path -Path $ULFC_destPath -ChildPath $ULFC_destFile
+    Copy-Item -Path $LogPath -Destination $ULFC_destFullPath > $null
+    
+    Exit 0
 }
 
 # If no Windows 11 installed, Continue with the rest of your script here
@@ -29,6 +45,13 @@ Write-Output "Checking OS version... Windows 11 is not installed. Proceeding..."
 # Ensure the Setup.exe exists before proceeding
 if (!(Test-Path $SetupExe)) {
     Write-Output "ERROR: setup.exe not found at $SetupExe" | Out-File -Append $LogPath
+
+    # ULFC - Create destination file name with hostname and timestamp. Copy it to network share.
+    $ULFC_timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
+    $ULFC_destFile = "Win11UpgLog_${ULFC_hostname}_$ULFC_timestamp.log"
+    $ULFC_destFullPath = Join-Path -Path $ULFC_destPath -ChildPath $ULFC_destFile
+    Copy-Item -Path $LogPath -Destination $ULFC_destFullPath > $null
+   
     Exit 1
 }
 
@@ -36,6 +59,13 @@ if (!(Test-Path $SetupExe)) {
 $SetupProcess = Get-Process -Name "setup" -ErrorAction SilentlyContinue
 if ($SetupProcess) {
     Write-Output "Windows 11 upgrade is already in progress. Exiting script." | Out-File -Append $LogPath
+
+    # ULFC - Create destination file name with hostname and timestamp. Copy it to network share.
+    $ULFC_timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
+    $ULFC_destFile = "Win11UpgLog_${ULFC_hostname}_$ULFC_timestamp.log"
+    $ULFC_destFullPath = Join-Path -Path $ULFC_destPath -ChildPath $ULFC_destFile
+    Copy-Item -Path $LogPath -Destination $ULFC_destFullPath > $null
+    
     Exit 0
 }
 
@@ -71,11 +101,17 @@ while ($true) {
 # Ensure Upgrade Was Successful
 $OSVersion = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion").ReleaseId
 if ($OSVersion -ge 22000) {
-    Write-Output "Windows 11 upgrade was successful. Cleaning up installation files..." | Out-File -Append $LogPath
+    Write-Output "Windows 11 upgrade was successful. System must reboot to complete the process." | Out-File -Append $LogPath
     
     # Remove installation files (Disabled because source is network share)
     #Disabled# Remove-Item -Path $Win11SetupPath -Recurse -Force -ErrorAction SilentlyContinue
-    #Disavled# Write-Output "Installation files deleted successfully." | Out-File -Append $LogPath
+    #Disabled# Write-Output "Installation files deleted successfully." | Out-File -Append $LogPath
+
+    # ULFC - Create destination file name with hostname and timestamp. Copy it to network share.
+    $ULFC_timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
+    $ULFC_destFile = "Win11UpgLog_${ULFC_hostname}_$ULFC_timestamp.log"
+    $ULFC_destFullPath = Join-Path -Path $ULFC_destPath -ChildPath $ULFC_destFile
+    Copy-Item -Path $LogPath -Destination $ULFC_destFullPath > $null
     
     # Reboot system
     Write-Output "Rebooting the system in 600 seconds..." | Out-File -Append $LogPath
@@ -83,5 +119,12 @@ if ($OSVersion -ge 22000) {
     Restart-Computer -Force
 } else {
     Write-Output "ERROR: Windows 11 upgrade failed. Please check logs." | Out-File -Append $LogPath
+
+    # ULFC - Create destination file name with hostname and timestamp. Copy it to network share.
+    $ULFC_timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
+    $ULFC_destFile = "Win11UpgLog_${ULFC_hostname}_$ULFC_timestamp.log"
+    $ULFC_destFullPath = Join-Path -Path $ULFC_destPath -ChildPath $ULFC_destFile
+    Copy-Item -Path $LogPath -Destination $ULFC_destFullPath > $null
+
     Exit 1
 }
