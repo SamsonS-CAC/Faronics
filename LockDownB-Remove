@@ -1,0 +1,22 @@
+$Name = "Respondus*"
+$ProcName = "Respondus*"
+$Timestamp = Get-Date -Format "yyyy-MM-dd_THHmmss"
+$LogFile = "$env:TEMP\Respondus-CU-Uninst_$Timestamp.log"
+$ProgramList = @( "HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*", "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*" )
+$Programs = Get-ItemProperty $ProgramList -EA 0
+$App = ($Programs | Where-Object { $_.DisplayName -like $Name -and $_.UninstallString -like "*msiexec*" }).PSChildName
+
+if ($App) {
+    Get-Process | Where-Object { $_.ProcessName -eq $ProcName } | Stop-Process -Force
+    $Params = @(
+        "/qn"
+        "/norestart"
+        "/X"
+        "$App"
+        "/L*V ""$LogFile"""
+        )
+        Start-Process "msiexec.exe" -ArgumentList $Params -Wait -NoNewWindow
+}
+else {
+    Write-Output "$Name not found installed in registry."
+}

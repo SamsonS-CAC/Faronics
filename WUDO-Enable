@@ -1,0 +1,86 @@
+###################################################################################
+#### ------------------------------------------------------------------------- ####
+#### MDO / Microsoft Delivery Optimization Configuration -- Updated 08/14/2024 ####
+#### ------------------------------------------------------------------------- ####
+###################################################################################
+
+
+
+######################
+## MDO via Settings ##
+############################################
+$RegistryPath1 =  'Registry::HKEY_USERS\S-1-5-20\Software\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Settings'
+New-Item -Path $RegistryPath1
+##
+Set-ItemProperty -Path $RegistryPath1 -Name 'DownloadMode'                        -Value '1'       -Type "DWord"
+Set-ItemProperty -Path $RegistryPath1 -Name 'DownloadRateBackgroundBps'           -Value '8388608' -Type "DWord"
+Set-ItemProperty -Path $RegistryPath1 -Name 'DownloadRateBackgroundBpsProvider'   -Value '8'       -Type "DWord"
+Set-ItemProperty -Path $RegistryPath1 -Name 'DownloadRateForegroundBps'           -Value '8388608' -Type "DWord"
+Set-ItemProperty -Path $RegistryPath1 -Name 'DownloadRateForegroundBpsProvider'   -Value '8'       -Type "DWord"
+Set-ItemProperty -Path $RegistryPath1 -Name 'DownloadRateBackgroundPct'           -Value '8'       -Type "DWord"
+Set-ItemProperty -Path $RegistryPath1 -Name 'DownloadRateBackgroundProvider'      -Value '8'       -Type "DWord"
+Set-ItemProperty -Path $RegistryPath1 -Name 'DownloadRateForegroundPct'           -Value '8'       -Type "DWord"
+Set-ItemProperty -Path $RegistryPath1 -Name 'DownloadRateForegroundProvider'      -Value '8'       -Type "DWord"
+Set-ItemProperty -Path $RegistryPath1 -Name 'UpRatePctBandwidth'                  -Value '8'       -Type "DWord"
+Set-ItemProperty -Path $RegistryPath1 -Name 'UploadLimitGBMonth'                  -Value '8'       -Type "DWord"
+##
+Start-Sleep -Seconds 2
+############################################
+
+
+
+####################
+## MDO via Policy ##
+############################################
+$RegistryPath2 =  'Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization'
+New-Item -Path $RegistryPath2
+##
+Set-ItemProperty -Path $RegistryPath2 -Name 'DOAbsoluteMaxCacheSize'              -Value '8'       -Type "DWord"
+Set-ItemProperty -Path $RegistryPath2 -Name 'DOMaxBackgroundDownloadBandwidth'    -Value '8192'    -Type "DWord"
+Set-ItemProperty -Path $RegistryPath2 -Name 'DOMaxForegroundDownloadBandwidth'    -Value '8192'    -Type "DWord"
+Set-ItemProperty -Path $RegistryPath2 -Name 'DOPercentageMaxBackgroundBandwidth'  -Value '8'       -Type "DWord"
+Set-ItemProperty -Path $RegistryPath2 -Name 'DOPercentageMaxForegroundBandwidth'  -Value '8'       -Type "DWord"
+Set-ItemProperty -Path $RegistryPath2 -Name 'DODownloadMode'                      -Value '1'       -Type "DWord"
+Set-ItemProperty -Path $RegistryPath2 -Name 'DOMonthlyUploadDataCap'              -Value '8'       -Type "DWord"
+Set-ItemProperty -Path $RegistryPath2 -Name 'DOMaxCacheSize'                      -Value '8'       -Type "DWord"
+##
+Start-Sleep -Seconds 2
+############################################
+
+
+
+#####################
+## MDO via Service ##
+############################################
+$RegistryPath3 =  'Registry::HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DoSvc'
+New-Item -Path $RegistryPath3
+##
+Set-ItemProperty -Path $RegistryPath3 -Name 'Start'            -Value '2' -Type "DWord"
+Set-ItemProperty -Path $RegistryPath3 -Name 'DelayedAutostart' -Value '1' -Type "DWord"
+##
+Start-Sleep -Seconds 2
+############################################
+
+
+
+###############################
+## Force Restart MDO Service ##
+############################################
+Stop-Service -Force -Name "DoSvc"
+Start-Sleep -Seconds 10
+##
+Start-Service -Name "DoSvc"
+Start-Sleep -Seconds 10
+Start-Service -Name "DoSvc"
+Start-Sleep -Seconds 10
+Start-Service -Name "DoSvc"
+Start-Sleep -Seconds 10
+Start-Service -Name "DoSvc"
+Start-Sleep -Seconds 10
+Start-Service -Name "DoSvc"
+Start-Sleep -Seconds 10
+############################################
+############################################
+############################################
+############################################
+
