@@ -12,3 +12,5 @@ MsiExec.exe /X{F03416B2-8C97-4CC4-8578-5F6A5823AB84} /qn /norestart /log "C:\ITS
 
 MsiExec.exe /X{F03416B2-8C97-4CC4-8578-5F6A5824FB84} /qn /norestart /log "C:\ITS\logs\remove-PDQConnectAgent-output4.log"
 
+MsiExec.exe /X{F03416B2-8C97-4CC4-8578-5F6A58244B84} /qn /norestart /log "C:\ITS\logs\remove-PDQConnectAgent-output5.log"
+
