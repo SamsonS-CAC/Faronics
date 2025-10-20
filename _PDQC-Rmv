@@ -1,12 +1,18 @@
 mkdir C:\ITS\logs
 
-"C:\Program Files (x86)\PDQ\PDQ RD Viewer\unins000.exe" /SILENT /NORESTART /LOG="C:\ITS\logs\remove-PDQRDViewer-output.log"
+"C:\Program Files (x86)\PDQ\PDQ RD Viewer\unins000.exe" /SILENT /NORESTART /LOG="C:\ITS\logs\remove-PDQRDViewer-output1.log"
 
-MsiExec.exe /X{0EC05CD8-8D17-472C-86DA-AF1EA387256F} /qn /norestart /log "C:\ITS\logs\remove-PDQConnectUpdater-output.log"
+"C:\Program Files (x86)\PDQ\PDQ Remote Desktop Agent\unins000.exe" /SILENT /NORESTART /LOG="C:\ITS\logs\remove-PDQRDViewer-output2.log"
+
+
+MsiExec.exe /X{0EC05CD8-8D17-472C-86DA-AF1EA387256F} /qn /norestart /log "C:\ITS\logs\remove-PDQConnectUpdater-output1.log"
 
 MsiExec.exe /X{0EC05CD8-8D17-472C-86DA-AF1EA3C6756F} /qn /norestart /log "C:\ITS\logs\remove-PDQConnectUpdater-output2.log"
 
-MsiExec.exe /X{F03416B2-8C97-4CC4-8578-5F6A58234B84} /qn /norestart /log "C:\ITS\logs\remove-PDQConnectAgent-output.log"
+MsiExec.exe /X{0EC05CD8-8D17-472C-86DA-AF1EA387256F} /qn /norestart /log "C:\ITS\logs\remove-PDQConnectUpdater-output3.log"
+
+
+MsiExec.exe /X{F03416B2-8C97-4CC4-8578-5F6A58234B84} /qn /norestart /log "C:\ITS\logs\remove-PDQConnectAgent-output1.log"
 
 MsiExec.exe /X{F03416B2-8C97-4CC4-8578-5F6A58238B84} /qn /norestart /log "C:\ITS\logs\remove-PDQConnectAgent-output2.log"
 
@@ -17,4 +23,11 @@ MsiExec.exe /X{F03416B2-8C97-4CC4-8578-5F6A5824FB84} /qn /norestart /log "C:\ITS
 MsiExec.exe /X{F03416B2-8C97-4CC4-8578-5F6A58244B84} /qn /norestart /log "C:\ITS\logs\remove-PDQConnectAgent-output5.log"
 
 MsiExec.exe /X{F03416B2-8C97-4CC4-8578-5F6A58434B84} /qn /norestart /log "C:\ITS\logs\remove-PDQConnectAgent-output6.log"
+
+MsiExec.exe /X{F03416B2-8C97-4CC4-8578-5F6A58431B84} /qn /norestart /log "C:\ITS\logs\remove-PDQConnectAgent-output7.log"
+
+MsiExec.exe /X{F03416B2-8C97-4CC4-8578-5F6A5843FB84} /qn /norestart /log "C:\ITS\logs\remove-PDQConnectAgent-output8.log"
+
+MsiExec.exe /X{F03416B2-8C97-4CC4-8578-5F6A5833EB84} /qn /norestart /log "C:\ITS\logs\remove-PDQConnectAgent-output9.log"
+
 
