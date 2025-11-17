@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
- Version 20251117. Cleans up leftover Webex and Cisco Spark files, shortcuts, registry keys, and uninstalls MSI packages for all user profiles.
+ Version 20251117.2. Cleans up leftover Webex and Cisco Spark files, shortcuts, registry keys, and uninstalls MSI packages for all user profiles.
 #>
 
 #region Configuration
@@ -49,7 +49,7 @@ $PublicStartMenu = Join-Path $Env:ProgramData 'Microsoft\Windows\Start Menu\Prog
 #endregion
 
 function Uninstall-MSIProducts {
-    Write-Host "`n=== Uninstalling MSI‑based Webex/Spark products ==="
+    Write-Host "Uninstalling MSI‑based Webex/Spark products ==="
     # Use Get-WmiObject Win32_Product to find installed MSI products
     $installed = Get-WmiObject -Class Win32_Product -ErrorAction SilentlyContinue |
         Where-Object {
@@ -59,22 +59,22 @@ function Uninstall-MSIProducts {
             return $false
         }
     if (-not $installed) {
-        Write-Host "ℹ No MSI products matching Webex/Spark found."
+        Write-Host "No MSI products matching Webex/Spark found."
         return
     }
     foreach ($pkg in $installed) {
-        Write-Host "→ Uninstalling: $($pkg.Name) (ProductCode: $($pkg.IdentifyingNumber))"
+        Write-Host "Uninstalling: $($pkg.Name) (ProductCode: $($pkg.IdentifyingNumber))"
         try {
             $exit = $pkg.Uninstall()
             if ($exit.ReturnValue -eq 0) {
-                Write-Host "✔ Successfully uninstalled $($pkg.Name)"
+                Write-Host "Successfully uninstalled $($pkg.Name)"
             }
             else {
-                Write-Warning "⚠ Failed to uninstall $($pkg.Name) (ReturnValue: $($exit.ReturnValue))"
+                Write-Warning "Failed to uninstall $($pkg.Name) (ReturnValue: $($exit.ReturnValue))"
             }
         }
         catch {
-            Write-Warning "⚠ Exception uninstalling $($pkg.Name): $_"
+            Write-Warning "Exception uninstalling $($pkg.Name): $_"
         }
     }
 } # <-- Closing brace for Uninstall-MSIProducts
@@ -84,10 +84,10 @@ function Remove-Paths {
     foreach ($p in $Paths) {
         if (Test-Path $p) {
             Remove-Item -LiteralPath $p -Recurse -Force -ErrorAction SilentlyContinue
-            Write-Host "✔ Removed: $p"
+            Write-Host "Removed: $p"
         }
         else {
-            Write-Host "ℹ Not found: $p"
+            Write-Host "Not found: $p"
         }
     }
 } # <-- Closing brace for Remove-Paths
@@ -99,11 +99,11 @@ function Remove-Shortcuts {
         if ($matches) {
             foreach ($lnk in $matches) {
                 Remove-Item -LiteralPath $lnk.FullName -Force -ErrorAction SilentlyContinue
-                Write-Host "✔ Removed shortcut: $($lnk.FullName)"
+                Write-Host "Removed shortcut: $($lnk.FullName)"
             }
         }
         else {
-            Write-Host "ℹ No shortcuts matching '$pattern' in $BaseFolder"
+            Write-Host "No shortcuts matching '$pattern' in $BaseFolder"
         }
     }
 } # <-- Closing brace for Remove-Shortcuts
@@ -112,10 +112,10 @@ function Remove-MachineRegKeys {
     foreach ($key in $MachineRegKeys) {
         if (Test-Path $key) {
             Remove-Item -Path $key -Recurse -Force -ErrorAction SilentlyContinue
-            Write-Host "✔ Removed registry key: $key"
+            Write-Host "Removed registry key: $key"
         }
         else {
-            Write-Host "ℹ Registry key not found: $key"
+            Write-Host "Registry key not found: $key"
         }
     }
 } # <-- Closing brace for Remove-MachineRegKeys
@@ -128,10 +128,10 @@ function Remove-UserRegKeys {
         $fullKey = "Registry::HKEY_USERS\$hiveName\$subKey"
         if (Test-Path $fullKey) {
             Remove-Item -Path $fullKey -Recurse -Force -ErrorAction SilentlyContinue
-            Write-Host "✔ Removed user-registry: HKU:\$hiveName\$subKey"
+            Write-Host "Removed user-registry: HKU:\$hiveName\$subKey"
         }
         else {
-            Write-Host "ℹ User-registry not found: HKU:\$hiveName\$subKey"
+            Write-Host "User-registry not found: HKU:\$hiveName\$subKey"
         }
     }
     reg.exe unload "HKU\$hiveName" 2>$null
@@ -142,7 +142,7 @@ function Remove-UserRegKeys {
 Uninstall-MSIProducts
 
 # 2) Remove machine‑wide registry keys
-Write-Host "`n=== Removing machine‑wide registry entries ==="
+Write-Host "Removing machine‑wide registry entries ==="
 Remove-MachineRegKeys
 
 # 3) Process each real user profile
@@ -150,7 +150,7 @@ $skip = 'Default','Default User','Public','All Users'
 $profiles = Get-ChildItem -Directory -Path $UserProfilesRoot |
     Where-Object { $skip -notcontains $_.Name }
 foreach ($prof in $profiles) {
-    Write-Host "`n=== Profile: $($prof.Name) ==="
+    Write-Host "Profile: $($prof.Name) ==="
     # a) Delete AppData folders
     $paths = $RelativeDataPaths | ForEach-Object { Join-Path $prof.FullName $_ }
     Remove-Paths -Paths $paths
@@ -168,7 +168,7 @@ foreach ($prof in $profiles) {
 } # <-- Closing brace for foreach profile
 
 # 4) Clean Public shortcuts only
-Write-Host "`n=== Cleaning Public shortcuts ==="
+Write-Host "Cleaning Public shortcuts ==="
 Remove-Shortcuts -BaseFolder $PublicDesktop -Patterns $ShortcutPatterns
 Remove-Shortcuts -BaseFolder $PublicStartMenu -Patterns $ShortcutPatterns
 
