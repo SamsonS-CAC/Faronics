@@ -1,14 +1,17 @@
 <#
 .SYNOPSIS
- Version 20251117.2. Cleans up leftover Webex and Cisco Spark files, shortcuts, registry keys, and uninstalls MSI packages for all user profiles.
+    Version: 20251117.3
+    Cleans up leftover Webex and Cisco Spark files, shortcuts, registry keys, and uninstalls MSI packages for all user profiles.
 #>
 
 #region Configuration
-$UserProfilesRoot = 'C:\Users'
+$UserProfilesRoot   = 'C:\Users'
+
 # MSI product name patterns to uninstall
-$MsiNamePatterns = @('*Webex*', '*Cisco Spark*')
+$MsiNamePatterns   = @('*Webex*', '*Cisco Spark*')
+
 # Data folders to remove under each profile
-$RelativeDataPaths = @(
+$RelativeDataPaths  = @(
     'AppData\Local\Webex',
     'AppData\Roaming\Webex',
     'AppData\Local\Cisco\Spark',
@@ -19,9 +22,11 @@ $RelativeDataPaths = @(
     'C:\Program Files\Cisco Spark\',
     'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Webex'
 )
+
 # Shortcut filename patterns
-$ShortcutPatterns = @('*Webex*.lnk', '*Cisco Spark*.lnk')
-# Machine‑wide registry keys to delete
+$ShortcutPatterns   = @('*Webex*.lnk', '*Cisco Spark*.lnk')
+
+# Machine wide registry keys to delete
 $MachineRegKeys = @(
     'HKLM:\SOFTWARE\Cisco\Webex',
     'HKLM:\SOFTWARE\Webex',
@@ -36,32 +41,36 @@ $MachineRegKeys = @(
     'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Cisco Spark',
     'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Cisco Spark'
 )
-# Per‑user registry subkeys under HKCU to delete
+
+# Per user registry subkeys under HKCU to delete
 $UserRegSubKeys = @(
     'Software\Cisco\Webex',
     'Software\Webex',
     'Software\Cisco\Spark',
     'Software\Cisco Spark'
 )
+
 # Public shortcuts locations
-$PublicDesktop = Join-Path $UserProfilesRoot 'Public\Desktop'
+$PublicDesktop   = Join-Path $UserProfilesRoot 'Public\Desktop'
 $PublicStartMenu = Join-Path $Env:ProgramData 'Microsoft\Windows\Start Menu\Programs'
 #endregion
 
 function Uninstall-MSIProducts {
-    Write-Host "Uninstalling MSI‑based Webex/Spark products ==="
+    Write-Host "=== Uninstalling MSI based Webex/Spark products ==="
     # Use Get-WmiObject Win32_Product to find installed MSI products
     $installed = Get-WmiObject -Class Win32_Product -ErrorAction SilentlyContinue |
-        Where-Object {
-            foreach ($pattern in $MsiNamePatterns) {
-                if ($_.Name -like $pattern) { return $true }
-            }
-            return $false
-        }
+                 Where-Object { 
+                     foreach ($pattern in $MsiNamePatterns) {
+                         if ($_.Name -like $pattern) { return $true }
+                     }
+                     return $false
+                 }
+
     if (-not $installed) {
         Write-Host "No MSI products matching Webex/Spark found."
         return
     }
+
     foreach ($pkg in $installed) {
         Write-Host "Uninstalling: $($pkg.Name) (ProductCode: $($pkg.IdentifyingNumber))"
         try {
@@ -77,7 +86,7 @@ function Uninstall-MSIProducts {
             Write-Warning "Exception uninstalling $($pkg.Name): $_"
         }
     }
-} # <-- Closing brace for Uninstall-MSIProducts
+}
 
 function Remove-Paths {
     param([string[]] $Paths)
@@ -90,7 +99,7 @@ function Remove-Paths {
             Write-Host "Not found: $p"
         }
     }
-} # <-- Closing brace for Remove-Paths
+}
 
 function Remove-Shortcuts {
     param([string] $BaseFolder, [string[]] $Patterns)
@@ -106,7 +115,7 @@ function Remove-Shortcuts {
             Write-Host "No shortcuts matching '$pattern' in $BaseFolder"
         }
     }
-} # <-- Closing brace for Remove-Shortcuts
+}
 
 function Remove-MachineRegKeys {
     foreach ($key in $MachineRegKeys) {
@@ -118,12 +127,14 @@ function Remove-MachineRegKeys {
             Write-Host "Registry key not found: $key"
         }
     }
-} # <-- Closing brace for Remove-MachineRegKeys
+}
 
 function Remove-UserRegKeys {
     param([string] $NtUserDatPath)
+
     $hiveName = 'TempHive_' + [Guid]::NewGuid().ToString('N')
     reg.exe load "HKU\$hiveName" "$NtUserDatPath" 2>$null
+
     foreach ($subKey in $UserRegSubKeys) {
         $fullKey = "Registry::HKEY_USERS\$hiveName\$subKey"
         if (Test-Path $fullKey) {
@@ -134,29 +145,35 @@ function Remove-UserRegKeys {
             Write-Host "User-registry not found: HKU:\$hiveName\$subKey"
         }
     }
+
     reg.exe unload "HKU\$hiveName" 2>$null
-} # <-- Closing brace for Remove-UserRegKeys
+}
 
 # === MAIN ===
-# 1) Uninstall any MSI‑based Webex/Spark products
+
+# 1) Uninstall any MSI based Webex/Spark products
 Uninstall-MSIProducts
 
-# 2) Remove machine‑wide registry keys
-Write-Host "Removing machine‑wide registry entries ==="
+# 2) Remove machine wide registry keys
+Write-Host "=== Removing machine wide registry entries ==="
 Remove-MachineRegKeys
 
 # 3) Process each real user profile
 $skip = 'Default','Default User','Public','All Users'
 $profiles = Get-ChildItem -Directory -Path $UserProfilesRoot |
-    Where-Object { $skip -notcontains $_.Name }
+            Where-Object { $skip -notcontains $_.Name }
+
 foreach ($prof in $profiles) {
-    Write-Host "Profile: $($prof.Name) ==="
+    Write-Host "=== Profile: $($prof.Name) ==="
+
     # a) Delete AppData folders
     $paths = $RelativeDataPaths | ForEach-Object { Join-Path $prof.FullName $_ }
     Remove-Paths -Paths $paths
+
     # b) Delete shortcuts
     Remove-Shortcuts -BaseFolder (Join-Path $prof.FullName 'Desktop') -Patterns $ShortcutPatterns
     Remove-Shortcuts -BaseFolder (Join-Path $prof.FullName 'AppData\Roaming\Microsoft\Windows\Start Menu\Programs') -Patterns $ShortcutPatterns
+
     # c) Delete per-user registry
     $ntuser = Join-Path $prof.FullName 'NTUSER.DAT'
     if (Test-Path $ntuser) {
@@ -165,11 +182,9 @@ foreach ($prof in $profiles) {
     else {
         Write-Warning "NTUSER.DAT not found for profile $($prof.Name)"
     }
-} # <-- Closing brace for foreach profile
+}
 
 # 4) Clean Public shortcuts only
-Write-Host "Cleaning Public shortcuts ==="
-Remove-Shortcuts -BaseFolder $PublicDesktop -Patterns $ShortcutPatterns
+Write-Host "=== Cleaning Public shortcuts ==="
+Remove-Shortcuts -BaseFolder $PublicDesktop   -Patterns $ShortcutPatterns
 Remove-Shortcuts -BaseFolder $PublicStartMenu -Patterns $ShortcutPatterns
-
-
