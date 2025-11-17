@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
- Cleans up leftover Webex and Cisco Spark files, shortcuts, registry keys, and uninstalls MSI packages for all user profiles.
+ Version 20251117. Cleans up leftover Webex and Cisco Spark files, shortcuts, registry keys, and uninstalls MSI packages for all user profiles.
 #>
 
 #region Configuration
