@@ -1,17 +1,17 @@
 <#
 .SYNOPSIS
-    Version: 20251117.3
+    Version: 20251117.4
     Cleans up leftover Webex and Cisco Spark files, shortcuts, registry keys, and uninstalls MSI packages for all user profiles.
 #>
 
 #region Configuration
-$UserProfilesRoot   = 'C:\Users'
+$UserProfilesRoot = 'C:\Users'
 
 # MSI product name patterns to uninstall
-$MsiNamePatterns   = @('*Webex*', '*Cisco Spark*')
+$MsiNamePatterns = @('*Webex*', '*Cisco Spark*')
 
 # Data folders to remove under each profile
-$RelativeDataPaths  = @(
+$RelativeDataPaths = @(
     'AppData\Local\Webex',
     'AppData\Roaming\Webex',
     'AppData\Local\Cisco\Spark',
@@ -24,7 +24,7 @@ $RelativeDataPaths  = @(
 )
 
 # Shortcut filename patterns
-$ShortcutPatterns   = @('*Webex*.lnk', '*Cisco Spark*.lnk')
+$ShortcutPatterns = @('*Webex*.lnk', '*Cisco Spark*.lnk')
 
 # Machine wide registry keys to delete
 $MachineRegKeys = @(
@@ -51,7 +51,7 @@ $UserRegSubKeys = @(
 )
 
 # Public shortcuts locations
-$PublicDesktop   = Join-Path $UserProfilesRoot 'Public\Desktop'
+$PublicDesktop = Join-Path $UserProfilesRoot 'Public\Desktop'
 $PublicStartMenu = Join-Path $Env:ProgramData 'Microsoft\Windows\Start Menu\Programs'
 #endregion
 
@@ -59,7 +59,7 @@ function Uninstall-MSIProducts {
     Write-Host "=== Uninstalling MSI based Webex/Spark products ==="
     # Use Get-WmiObject Win32_Product to find installed MSI products
     $installed = Get-WmiObject -Class Win32_Product -ErrorAction SilentlyContinue |
-                 Where-Object { 
+                 Where-Object {
                      foreach ($pattern in $MsiNamePatterns) {
                          if ($_.Name -like $pattern) { return $true }
                      }
@@ -188,3 +188,4 @@ foreach ($prof in $profiles) {
 Write-Host "=== Cleaning Public shortcuts ==="
 Remove-Shortcuts -BaseFolder $PublicDesktop   -Patterns $ShortcutPatterns
 Remove-Shortcuts -BaseFolder $PublicStartMenu -Patterns $ShortcutPatterns
+
