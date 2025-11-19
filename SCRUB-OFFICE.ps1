@@ -39,10 +39,10 @@ Param (
     [int]$SecondsToReboot = 60
 )
 #----------------------------------------------------------[Declarations]----------------------------------------------------------
-$SaRA_URL = "https://aka.ms/SaRA_EnterpriseVersionFiles"
-## $SaRA_URL = "https://aka.ms/SaRA_CommandLineVersionFiles"
+$SaRA_URL = "https://aka.ms/SaRA_CommandLineVersionFiles"
+## $SaRA_URL = "https://aka.ms/SaRA_EnterpriseVersionFiles"
 $SaRA_ZIP = "$env:TEMP\SaRA.zip"
-$SaRA_DIR = "$env:TEMP\SaRA\DONE"
+$SaRA_DIR = "$env:TEMP\SaRA"
 $SaRA_EXE = "$SaRA_DIR\SaRAcmd.exe"
 $Office365Setup_URL = "https://github.com/SamsonS-CAC/Faronics/raw/main/office365-installer"
 #-----------------------------------------------------------[Functions]------------------------------------------------------------
