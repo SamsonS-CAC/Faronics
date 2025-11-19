@@ -33,7 +33,7 @@
 Param (
     [switch]$InstallOffice365 = $False,
     [switch]$SuppressReboot = $True,
-    [switch]$UseSetupRemoval = $True,
+    [switch]$UseSetupRemoval = $False,
     [Switch]$Force = $True,
     [switch]$RunAgain = $True,
     [int]$SecondsToReboot = 60
