@@ -40,7 +40,7 @@ Param (
 )
 #----------------------------------------------------------[Declarations]----------------------------------------------------------
 ## REMOVED ## $SaRA_URL = "https://aka.ms/SaRA_EnterpriseVersionFiles" ## OLD DIRECT LINK ##
-$SaRA_URL = "https://download.microsoft.com/download/13eaffaa-0961-4a6a-863b-26d1f8b0ca15/SaRACmd_17_01_3658_000.zip"
+$SaRA_URL = "https://aka.ms/SaRA_CommandLineVersionFiles"
 $SaRA_ZIP = "$env:TEMP\SaRA.zip"
 $SaRA_DIR = "$env:TEMP\SaRA"
 $SaRA_EXE = "$SaRA_DIR\SaRAcmd.exe"
