@@ -39,7 +39,7 @@ Param (
     [int]$SecondsToReboot = 60
 )
 #----------------------------------------------------------[Declarations]----------------------------------------------------------
-$SaRA_URL = "https://aka.ms/SaRA_CommandLineVersionFiles"
+$SaRA_URL = "https://www.dropbox.com/scl/fi/tphcrmb5tda2bkbg55k81/SaRA_EnterpriseVersionFiles.zip?rlkey=tc28jzhflsdpl8hwlca0xx2y4&st=amekyhrq&dl=1"
 $SaRA_ZIP = "$env:TEMP\SaRA.zip"
 $SaRA_DIR = "$env:TEMP\SaRA"
 $SaRA_EXE = "$SaRA_DIR\SaRAcmd.exe"
