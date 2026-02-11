@@ -297,7 +297,6 @@ $WhitelistedApps = @(
     'Dell Peripheral Manager',
     'MSTeams',
     'Microsoft.Paint',
-    'Microsoft.OutlookForWindows',
     'Microsoft.WindowsTerminal',
     'Microsoft.MicrosoftEdge.Stable',
     'Microsoft.MPEG2VideoExtension',
@@ -400,11 +399,11 @@ $Bloatware = @(
     "DolbyLaboratories.DolbyAudio"
     "E0469640.SmartAppearance"
     "Microsoft.549981C3F5F10"
-    "Microsoft.AV1VideoExtension"
+    #"Microsoft.AV1VideoExtension"
     "Microsoft.BingNews"
     "Microsoft.BingSearch"
     "Microsoft.BingWeather"
-    "Microsoft.GetHelp"
+    #"Microsoft.GetHelp"
     "Microsoft.Getstarted"
     "Microsoft.GamingApp"
     "Microsoft.Messaging"
@@ -412,9 +411,9 @@ $Bloatware = @(
     "Microsoft.MicrosoftEdge.Stable"
     "Microsoft.MicrosoftJournal"
     "Microsoft.MicrosoftOfficeHub"
-    "Microsoft.MicrosoftSolitaireCollection"
+    #"Microsoft.MicrosoftSolitaireCollection"
     "Microsoft.MixedReality.Portal"
-    "Microsoft.MPEG2VideoExtension"
+    #"Microsoft.MPEG2VideoExtension"
     "Microsoft.News"
     "Microsoft.Office.Lens"
     "Microsoft.Office.OneNote"
@@ -424,10 +423,10 @@ $Bloatware = @(
     "Microsoft.PowerAutomateDesktop"
     "Microsoft.PowerAutomateDesktopCopilotPlugin"
     "Microsoft.Print3D"
-    "Microsoft.RemoteDesktop"
+    #"Microsoft.RemoteDesktop"
     "Microsoft.SkypeApp"
-    "Microsoft.SysinternalsSuite"
-    "Microsoft.Teams"
+    #"Microsoft.SysinternalsSuite"
+    #"Microsoft.Teams"
     "Microsoft.Windows.DevHome"
     "Microsoft.WindowsAlarms"
     "Microsoft.windowscommunicationsapps"
@@ -443,7 +442,7 @@ $Bloatware = @(
     "Microsoft.ZuneMusic"
     "Microsoft.ZuneVideo"
     "MicrosoftCorporationII.MicrosoftFamily"
-    "MicrosoftCorporationII.QuickAssist"
+    #"MicrosoftCorporationII.QuickAssist"
     "MicrosoftWindows.CrossDevice"
     "MirametrixInc.GlancebyMirametrix"
     "RealtimeboardInc.RealtimeBoard"
@@ -455,6 +454,7 @@ $Bloatware = @(
     "Intel Unison"
     "McAfeeWPSSparsePackage_0j6k21vdgrmfw"
     "Microsoft.Edge.GameAssist"
+	"Microsoft.OutlookForWindows"
     #Optional: Typically not removed but you can if you need to for some reason
     #"*Microsoft.Advertising.Xaml_10.1712.5.0_x64__8wekyb3d8bbwe*"
     #"*Microsoft.Advertising.Xaml_10.1712.5.0_x86__8wekyb3d8bbwe*"
@@ -728,19 +728,19 @@ foreach ($sid in $UserSIDs) {
 
 #Turns off Data Collection via the AllowTelemtry key by changing it to 0
 # This is needed for Intune reporting to work, uncomment if using via other method
-#write-output "Turning off Data Collection"
-#$DataCollection1 = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection"
-#$DataCollection2 = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection"
-#$DataCollection3 = "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection"
-#If (Test-Path $DataCollection1) {
-#    Set-ItemProperty $DataCollection1  AllowTelemetry -Value 0
-#}
-#If (Test-Path $DataCollection2) {
-#    Set-ItemProperty $DataCollection2  AllowTelemetry -Value 0
-#}
-#If (Test-Path $DataCollection3) {
-#    Set-ItemProperty $DataCollection3  AllowTelemetry -Value 0
-#}
+write-output "Turning off Data Collection"
+$DataCollection1 = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection"
+$DataCollection2 = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection"
+$DataCollection3 = "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection"
+If (Test-Path $DataCollection1) {
+    Set-ItemProperty $DataCollection1  AllowTelemetry -Value 0
+}
+If (Test-Path $DataCollection2) {
+    Set-ItemProperty $DataCollection2  AllowTelemetry -Value 0
+}
+If (Test-Path $DataCollection3) {
+    Set-ItemProperty $DataCollection3  AllowTelemetry -Value 0
+}
 
 
 ###Enable location tracking for "find my device", uncomment if you don't need it
