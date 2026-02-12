@@ -411,7 +411,7 @@ $Bloatware = @(
     "Microsoft.MicrosoftEdge.Stable"
     "Microsoft.MicrosoftJournal"
     "Microsoft.MicrosoftOfficeHub"
-    #"Microsoft.MicrosoftSolitaireCollection"
+    "Microsoft.MicrosoftSolitaireCollection"
     "Microsoft.MixedReality.Portal"
     #"Microsoft.MPEG2VideoExtension"
     "Microsoft.News"
@@ -455,6 +455,7 @@ $Bloatware = @(
     "McAfeeWPSSparsePackage_0j6k21vdgrmfw"
     "Microsoft.Edge.GameAssist"
 	"Microsoft.OutlookForWindows"
+	"Clipchamp.Clipchamp"
     #Optional: Typically not removed but you can if you need to for some reason
     #"*Microsoft.Advertising.Xaml_10.1712.5.0_x64__8wekyb3d8bbwe*"
     #"*Microsoft.Advertising.Xaml_10.1712.5.0_x86__8wekyb3d8bbwe*"
