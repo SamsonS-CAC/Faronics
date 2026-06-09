@@ -1,6 +1,6 @@
-<Configuration ID="c2431e04-19c2-446b-b77c-36839843275e">
+<Configuration ID="139afac2-1d89-4098-9360-5a243f76c19b">
   <Info Description="Office 365 - Shared PC - Yes Outlook" />
-  <Add OfficeClientEdition="64" Channel="Current">
+  <Add OfficeClientEdition="64" Channel="MonthlyEnterprise">
     <Product ID="O365ProPlusRetail">
       <Language ID="en-us" />
       <ExcludeApp ID="Groove" />
