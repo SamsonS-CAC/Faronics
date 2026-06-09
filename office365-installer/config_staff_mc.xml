@@ -1,0 +1,20 @@
+<Configuration ID="59291aad-ae4c-4d02-8ade-f43afea1a9aa">
+  <Info Description="Office 365 Monthly Channel Enterprise" />
+  <Add OfficeClientEdition="64" Channel="MonthlyEnterprise" MigrateArch="TRUE">
+    <Product ID="O365ProPlusRetail">
+      <Language ID="en-us" />
+      <ExcludeApp ID="Groove" />
+      <ExcludeApp ID="Lync" />
+    </Product>
+  </Add>
+  <Property Name="SharedComputerLicensing" Value="0" />
+  <Property Name="FORCEAPPSHUTDOWN" Value="TRUE" />
+  <Property Name="DeviceBasedLicensing" Value="0" />
+  <Property Name="SCLCacheOverride" Value="0" />
+  <Updates Enabled="TRUE" />
+  <RemoveMSI />
+  <AppSettings>
+    <Setup Name="Company" Value="Central Arizona College" />
+  </AppSettings>
+  <Display Level="Full" AcceptEULA="TRUE" />
+</Configuration>
